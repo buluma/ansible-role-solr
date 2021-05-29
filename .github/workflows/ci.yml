@@ -80,21 +80,21 @@ jobs:
         run: pip3 install ansible molecule[docker] docker
 
       # - name: Run Molecule tests.
-        # run: molecule test
-        # env:
-          # PY_COLORS: '1'
-          # ANSIBLE_FORCE_COLOR: '1'
-          # MOLECULE_DISTRO: ${{ matrix.distro }}
-          # MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
+      # run: molecule test
+       # env:
+        # PY_COLORS: '1'
+         # ANSIBLE_FORCE_COLOR: '1'
+         # MOLECULE_DISTRO: ${{ matrix.distro }}
+         # MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
       - name: molecule
         uses: buluma/molecule-action@2.6.3
 
       - name: Create Issue Action
-      if: failure()
-      uses: buluma/create-issue-action@v2.0.0
-      with:
-        title: Build Failed
-        token: ${{secrets.GITHUB_TOKEN}}
-        assignees: ${{github.actor}}
-        labels: bug
-        body: Workflow failed for commit ${{github.sha}}
+        if: failure()
+        uses: buluma/create-issue-action@v2.0.0
+        with:
+          title: Build Failed
+          token: ${{secrets.GITHUB_TOKEN}}
+          assignees: ${{github.actor}}
+          labels: bug
+          body: Workflow failed for commit ${{github.sha}}
