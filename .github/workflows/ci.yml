@@ -80,13 +80,13 @@ jobs:
         run: pip3 install ansible molecule[docker] docker
 
       - name: Run Molecule tests.
-      run: molecule test
-       env:
-        PY_COLORS: '1'
-         ANSIBLE_FORCE_COLOR: '1'
-         MOLECULE_DISTRO: ${{ matrix.distro }}
-         MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
-         
+        run: molecule test
+        env:
+          PY_COLORS: '1'
+          ANSIBLE_FORCE_COLOR: '1'
+          MOLECULE_DISTRO: ${{ matrix.distro }}
+          MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
+
       # - name: molecule
         # uses: buluma/molecule-action@v2.3.5
 
