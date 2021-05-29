@@ -106,4 +106,4 @@ MIT / BSD
 
 ## Author Information
 
-This role was created in 2021 by [Michael Buluma.
+This role was created in 2021 by Michael Buluma.
