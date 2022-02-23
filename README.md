@@ -1,109 +1,138 @@
-# Ansible Role: Apache Solr
+# [solr](#solr)
 
-[![CI](https://github.com/buluma/ansible-role-solr/workflows/CI/badge.svg?event=push)](https://github.com/buluma/ansible-role-solr/actions?query=workflow%3ACI) ![Ansible Role](https://img.shields.io/ansible/role/d/54760?color=blue)
+Apache Solr for Linux.
 
-Installs [Apache Solr](http://lucene.apache.org/solr/) on Linux servers.
+|GitHub|GitLab|Quality|Downloads|Version|
+|------|------|-------|---------|-------|
+|[![github](https://github.com/buluma/ansible-role-solr/workflows/Ansible%20Molecule/badge.svg)](https://github.com/buluma/ansible-role-solr/actions)|[![gitlab](https://gitlab.com/buluma/ansible-role-solr/badges/main/pipeline.svg)](https://gitlab.com/buluma/ansible-role-solr)|[![quality](https://img.shields.io/ansible/quality/54760)](https://galaxy.ansible.com/buluma/solr)|[![downloads](https://img.shields.io/ansible/role/d/54760)](https://galaxy.ansible.com/buluma/solr)|[![Version](https://img.shields.io/github/release/buluma/ansible-role-solr.svg)](https://github.com/buluma/ansible-role-solr/releases/)|
 
-## Requirements
+## [Example Playbook](#example-playbook)
 
-Java must be available on the server. You can easily install Java using the `buluma.java` role. Make sure the Java version installed meets the minimum requirements of Solr (e.g. Java 8 for Solr 6+).
+This example is taken from `molecule/default/converge.yml` and is tested on each push, pull request and release.
+```yaml
+---
+- name: Converge
+  hosts: all
+  become: true
 
-This role is currently tested and working with Solr 3.x, 4.x, 5.x, 6.x, 7.x, and 8.x.
+  pre_tasks:
+    - name: Set Java 8 package for RedHat.
+      set_fact:
+        java_packages:
+          - java-1.8.0-openjdk
+      when: ansible_os_family == "RedHat"
 
-## Role Variables
+    - name: Set Java 8 package for Ubuntu.
+      set_fact:
+        java_packages:
+          - openjdk-8-jdk
+      when: ansible_os_family == "Ubuntu"
 
-Available variables are listed below, along with default values (see `defaults/main.yml`):
+    - name: Set Java 11 package for Debian.
+      set_fact:
+        java_packages:
+          - openjdk-11-jdk
+      when: ansible_os_family == "Debian"
 
-    solr_workspace: /root
+    - name: Update apt cache.
+      apt: update_cache=true cache_valid_time=600
+      when: ansible_os_family == "Debian"
 
-Files will be downloaded to this path on the remote server before being moved into place.
+    # See: http://unix.stackexchange.com/a/342469
+    - name: Install dependencies (Debian).
+      apt:
+        name:
+          - openjdk-11-jre-headless
+          - ca-certificates-java
+        state: present
+      when: ansible_distribution == "Debian"
 
-    solr_create_user: true
-    solr_user: solr
-    solr_group: "{{ solr_user }}"
+  roles:
+    - role: buluma.java
+    - role: buluma.solr
+```
 
-Solr will be run under the `solr_user`. Set `solr_create_user` to `false` if `solr_user` is created before this role runs, or if you're using Solr 5+ and want Solr's own installation script to set up the user. By default, `solr_group` equals `solr_user`, but it can be overwritten to fit your own configuration.
 
-    solr_version: "8.6.0"
+## [Role Variables](#role-variables)
 
-The Apache Solr version to install. For a full list, see [available Apache Solr versions](http://archive.apache.org/dist/lucene/solr/).
+The default values for the variables are set in `defaults/main.yml`:
+```yaml
+---
+solr_workspace: /root
 
-    solr_mirror: "https://archive.apache.org/dist"
+solr_create_user: true
+solr_user: solr
+solr_group: "{{ solr_user }}"
 
-The Apache Project mirror from which the Solr tarball will be downloaded. In case of slow download speed or timeouts it is useful to set the mirror to the one suggested by Apache's [mirror download site](https://www.apache.org/dyn/closer.cgi/lucene/solr/).
+solr_version: "8.6.0"
+solr_mirror: "https://archive.apache.org/dist"
+solr_remove_cruft: false
 
-    solr_remove_cruft: false
+solr_service_manage: true
+solr_service_name: solr
+solr_service_state: started
 
-Whether to remove unneccessary documentation and examples from the solr directory.
+solr_install_dir: /opt
+solr_install_path: "/opt/{{ solr_service_name }}"
+solr_home: "/var/{{ solr_service_name }}"
+solr_connect_host: localhost
+solr_port: "8983"
 
-    solr_service_manage: true
-    solr_service_name: solr
-    solr_service_state: started
+solr_xms: "256M"
+solr_xmx: "512M"
 
-By default, this role will manage the `solr` service, ensuring it is enabled at system boot and is running. You can ensure Solr is stopped by setting `solr_service_state: stopped`, or you can disable this role's management of the `solr` service entirely by setting `solr_service_manage: false`. You may also want to set `solr_restart_handler_enabled: false` (documented later) in this case.
+solr_timezone: "UTC"
 
-    solr_install_dir: /opt
-    solr_install_path: /opt/solr
+solr_cores:
+  - collection1
 
-The path where Apache Solr will be installed. For Solr 5+, the `solr_install_dir` will be used by Solr's installation script. For Solr < 5, the Solr installation files will be copied in place in the `solr_install_path`.
+solr_config_file: /etc/default/{{ solr_service_name }}.in.sh
 
-    solr_home: /var/solr
+# Enable restart solr handler
+solr_restart_handler_enabled: true
 
-The path where local Solr data (search collections and configuration) will be stored. Should typically be outside of the `solr_path`, to make Solr upgrades easier.
+# Used only for Solr < 5.
+solr_log_file_path: /var/log/solr.log
+solr_host: "0.0.0.0"
+```
 
-    solr_port: "8983"
+## [Requirements](#requirements)
 
-The port on which Solr will run.
+- pip packages listed in [requirements.txt](https://github.com/buluma/ansible-role-solr/blob/main/requirements.txt).
 
-    solr_xms: "256M"
-    solr_xmx: "512M"
 
-Memory settings for the JVM. These should be set as high as you can allow for best performance and to reduce the chance of Solr restarting itself due to OOM situations.
+## [Context](#context)
 
-    solr_timezone: "UTC"
+This role is a part of many compatible roles. Have a look at [the documentation of these roles](https://buluma.co.ke/) for further information.
 
-Default timezone of JVM running solr. You can override this if needed when using dataimport and delta imports (ex: comparing against a MySQL external data source). Read through Apache Solr's [Working with Dates](https://cwiki.apache.org/confluence/display/solr/Working+with+Dates) documentation for more background.
+Here is an overview of related roles:
 
-    solr_cores:
-      - collection1
+![dependencies](https://raw.githubusercontent.com/buluma/ansible-role-solr/png/requirements.png "Dependencies")
 
-A list of cores / collections which should exist on the server. Each one will be created (if it doesn't exist already) using the default example configuration that ships with Solr. Note that this variable only applies when using Solr 5+.
+## [Compatibility](#compatibility)
 
-    solr_connect_host: localhost
+This role has been tested on these [container images](https://hub.docker.com/u/buluma):
 
-The hostname or IP address on which Solr will be reachable. `localhost` should work in most circumstances, but there are special cases where you may only be able to access the local Solr instance via another IP or hostname.
+|container|tags|
+|---------|----|
+|el|7, 8|
+|debian|all|
+|ubuntu|all|
 
-    solr_restart_handler_enabled: true
+The minimum version of Ansible required is 2.4, tests have been done to:
 
-Whether the `restart solr` handler should be used or not. If you're building containers or AMIs, you might need to disable the restart handler for a provisioning run.
+- The previous version.
+- The current version.
+- The development version.
 
-### Variables used only for Solr < 5.
 
-The following variables are currently only applied to installations of Solr 4 and below:
 
-    solr_log_file_path: /var/log/solr.log
+If you find issues, please register them in [GitHub](https://github.com/buluma/ansible-role-solr/issues)
 
-Path where Solr log file will be created.
+## [License](#license)
 
-    solr_host: "0.0.0.0"
+license (BSD, MIT)
 
-The hostname or IP address to which Solr will bind. Defaults to `0.0.0.0` which allows Solr to listen on all interfaces.
+## [Author Information](#author-information)
 
-## Dependencies
-
-None.
-
-## Example Playbook
-
-    - hosts: solr-servers
-      roles:
-        - buluma.java
-        - buluma.solr
-
-## License
-
-MIT / BSD
-
-## Author Information
-
-This role was created in 2021 by Michael Buluma.
+[buluma](https://buluma.github.io/)

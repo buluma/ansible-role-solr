@@ -88,9 +88,6 @@ jobs:
           MOLECULE_DISTRO: ${{ matrix.distro }}
           MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
 
-      # - name: molecule
-        # uses: buluma/molecule-action@v2.3.5
-
       - name: Create Issue on failure.
         if: failure()
         uses: buluma/create-issue-action@v2.0.0
