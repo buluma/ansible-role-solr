@@ -132,6 +132,13 @@ The minimum version of Ansible required is 2.4, tests have been done to:
 - The current version.
 - The development version.
 
+## [Exceptions](#exceptions)
+
+Some roles can't run on a specific distribution or version. Here are some exceptions.
+
+| variation                 | reason                 |
+|---------------------------|------------------------|
+| ubuntu:latest | bin/sh: 1: sudo: not found |
 
 
 If you find issues, please register them in [GitHub](https://github.com/buluma/ansible-role-solr/issues)
