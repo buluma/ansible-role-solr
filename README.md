@@ -100,6 +100,13 @@ solr_host: "0.0.0.0"
 
 - pip packages listed in [requirements.txt](https://github.com/buluma/ansible-role-solr/blob/main/requirements.txt).
 
+## [Status of used roles](#status-of-requirements)
+
+The following roles are used to prepare a system. You can prepare your system in another way.
+
+| Requirement | GitHub | GitLab |
+|-------------|--------|--------|
+|[buluma.java](https://galaxy.ansible.com/buluma/java)|[![Build Status GitHub](https://github.com/buluma/ansible-role-java/workflows/Ansible%20Molecule/badge.svg)](https://github.com/buluma/ansible-role-java/actions)|[![Build Status GitLab ](https://gitlab.com/buluma/ansible-role-java/badges/main/pipeline.svg)](https://gitlab.com/buluma/ansible-role-java)|
 
 ## [Context](#context)
 
@@ -131,7 +138,7 @@ If you find issues, please register them in [GitHub](https://github.com/buluma/a
 
 ## [License](#license)
 
-license (BSD, MIT)
+Apache-2.0
 
 ## [Author Information](#author-information)
 

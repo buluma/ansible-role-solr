@@ -6,7 +6,7 @@ galaxy_info:
   author: buluma
   description: Apache Solr for Linux.
   company: "Shadow Walker"
-  license: "license (BSD, MIT)"
+  license: Apache-2.0
   min_ansible_version: 2.4
   platforms:
     - name: EL
