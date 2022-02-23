@@ -18,7 +18,8 @@ galaxy_info:
         - all
     - name: Ubuntu
       versions:
-        - all
+        - docker
+        - bionic
   galaxy_tags:
     - development
     - solr
