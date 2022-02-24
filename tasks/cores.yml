@@ -1,11 +1,11 @@
 ---
 # Disable for CI Runs
-# - name: Check current list of Solr cores.
-#   uri:
-#     url: http://{{ solr_connect_host }}:{{ solr_port }}/solr/admin/cores
-#     return_content: true
-#   register: solr_cores_current
-#   check_mode: false
+- name: Check current list of Solr cores.
+  uri:
+    url: http://{{ solr_connect_host }}:{{ solr_port }}/solr/admin/cores
+    return_content: true
+  register: solr_cores_current
+  check_mode: false
 
 - name: Ensure Solr conf directories exist.
   file:
