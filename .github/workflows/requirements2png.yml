@@ -4,7 +4,7 @@
 #
 
 on:
-  - push
+  push: {branches: ["master", "main"]}
 
 name: Ansible Graphviz
 
