@@ -4,7 +4,11 @@
 #
 
 on:
-  push: {branches: ["master", "main"]}
+  - push
+
+concurrency:
+  group: ${{ github.ref }}-${{ github.workflow }}
+  cancel-in-progress: true
 
 name: Ansible Graphviz
 
@@ -13,7 +17,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: checkout
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3
         with:
           path: ${{ github.repository }}
       - name: create png
