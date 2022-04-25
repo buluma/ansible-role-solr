@@ -9,23 +9,31 @@ variables:
   PY_COLORS: 1
 
 molecule:
+  stage: build
   script:
     - image=${image} tag=${tag} molecule test
-  rules:
-    - if: $CI_COMMIT_REF_NAME == "main"
+  artifacts:
+    name: "$CI_JOB_STAGE-$CI_COMMIT_REF_NAME"
+    paths:
+      - /
+    expire_in: 1 day
   retry: 1
   parallel:
     matrix:
-      - image: "docker-rockylinux8-ansible"
-        tag: "latest"
+      - image: "enterpriselinux"
+        tag: "7"
       - image: "enterpriselinux"
         tag: "latest"
+      - image: "debian-systemd"
+        tag: "latest"
+      - image: "debian-systemd"
+        tag: "bookworm"
       - image: "docker-ubuntu-systemd"
         tag: "bionic"
-      - image: "docker-ubuntu-systemd"
-        tag: "focal"
 
 testing:
+  stage: test
+  needs: []
   script:
     - image=${image} tag=${tag} molecule test
   rules:
@@ -33,8 +41,8 @@ testing:
   retry: 1
   parallel:
     matrix:
-      - image: "docker-rockylinux8-ansible"
-        tag: "latest"
+      - image: "enterpriselinux"
+        tag: "7"
       - image: "enterpriselinux"
         tag: "latest"
       - image: "debian-systemd"
@@ -43,42 +51,23 @@ testing:
         tag: "bookworm"
       - image: "docker-ubuntu-systemd"
         tag: "bionic"
-      - image: "docker-ubuntu-systemd"
-        tag: "focal"
-
-role_testing:
-  script:
-    - image=${image} tag=${tag} ansible-galaxy install buluma.solr
-  rules:
-    - if: $CI_COMMIT_REF_NAME == "testing"
-  retry: 1
-  parallel:
-    matrix:
-      - image: "docker-rockylinux8-ansible"
-        tag: "latest"
-      - image: "enterpriselinux"
-        tag: "latest"
-      - image: "debian-systemd"
-        tag: "latest"
-      - image: "debian-systemd"
-        tag: "bookworm"
-      - image: "docker-ubuntu-systemd"
-        tag: "bionic"
-      - image: "docker-ubuntu-systemd"
-        tag: "focal"
 
 galaxy:
+  stage: deploy
+  needs: []
   script:
     - ansible-galaxy role info buluma.solr
 
-role_testing_live:
+role_testing:
+  stage: test
+  needs: []
   script:
     - image=${image} tag=${tag} ansible-galaxy install buluma.solr
   retry: 1
   parallel:
     matrix:
-      - image: "docker-rockylinux8-ansible"
-        tag: "latest"
+      - image: "enterpriselinux"
+        tag: "7"
       - image: "enterpriselinux"
         tag: "latest"
       - image: "debian-systemd"
@@ -87,5 +76,16 @@ role_testing_live:
         tag: "bookworm"
       - image: "docker-ubuntu-systemd"
         tag: "bionic"
-      - image: "docker-ubuntu-systemd"
-        tag: "focal"
+
+release_job:
+  stage: .post
+  needs: [molecule]
+  image: registry.gitlab.com/gitlab-org/release-cli:latest
+  rules:
+    - if: $CI_COMMIT_TAG
+  script:
+    - echo "Running the release job."
+  release:
+    tag_name: $CI_COMMIT_TAG
+    name: 'Release $CI_COMMIT_TAG'
+    description: 'Release created using the release-cli.'
