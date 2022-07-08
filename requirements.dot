@@ -1,0 +1,9 @@
+digraph PhiloDilemma {
+  label = "Michael Buluma" ;
+  overlap=false
+  {
+    "solr" [fillcolor=yellow style=filled penwidth=3]
+    "buluma.java" [fillcolor=green style=filled]
+  }
+  "solr" -> "buluma.java"
+}
