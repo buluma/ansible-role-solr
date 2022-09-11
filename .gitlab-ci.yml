@@ -1,5 +1,5 @@
 ---
-image: "buluma/github-action-molecule:4.0.9"
+image: "buluma/github-action-molecule:5.0.0"
 
 services:
   - docker:dind
@@ -22,7 +22,7 @@ molecule:
       - image: "enterpriselinux"
         tag: "7"
       - image: "enterpriselinux"
-        tag: "latest"
+        tag: "8"
       - image: "debian-systemd"
         tag: "latest"
       - image: "debian-systemd"
@@ -44,7 +44,7 @@ testing:
       - image: "enterpriselinux"
         tag: "7"
       - image: "enterpriselinux"
-        tag: "latest"
+        tag: "8"
       - image: "debian-systemd"
         tag: "latest"
       - image: "debian-systemd"
