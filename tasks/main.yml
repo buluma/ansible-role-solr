@@ -1,5 +1,6 @@
 ---
-- import_tasks: user.yml
+- nameL Process Users
+  import_tasks: user.yml
   when: solr_create_user
 
 - name: Set solr_filename for Solr 4+.

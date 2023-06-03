@@ -5,4 +5,4 @@
 repository:
   description: Apache Solr for Linux.
   homepage: https://buluma.github.io/
-  topics: development, solr, search, lucene, container, apache, text, ansible, molecule, tox, playbook, hacktoberfest
+  topics: development, solr, search, lucene, container, apache, text, ansible, molecule, tox, playbook

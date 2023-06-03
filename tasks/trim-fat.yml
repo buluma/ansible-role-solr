@@ -1,5 +1,5 @@
 ---
-- name: Remove the downloaded Solr archive.
+- name: trim-fat | Remove the downloaded Solr archive.
   file:
     path: "{{ item }}"
     state: absent
@@ -7,13 +7,13 @@
     - "{{ solr_workspace }}/{{ solr_filename }}.tgz"
     - "{{ solr_workspace }}/{{ solr_filename }}"
 
-- name: Remove docs, if not needed.
+- name: trim-fat | Remove docs, if not needed.
   file:
     path: "{{ solr_install_path }}/docs"
     state: absent
   when: solr_remove_cruft
 
-- name: Remove example dir, if not needed.
+- name: trim-fat | Remove example dir, if not needed.
   file:
     path: "{{ solr_install_path }}/example"
     state: absent

@@ -3,16 +3,17 @@
 # Ansible managed
 #
 exclude_paths:
-  - ./meta/exception.yml
   - ./meta/preferences.yml
   - ./molecule/default/prepare.yml
   - ./molecule/default/converge.yml
   - ./molecule/default/collections.yml
   - ./.tox
   - ./.cache
+  - ./.github
+  - ./requirements.yml
 
 skip_list:
-  - fqcn-builtins
-  - no-handler
-  - command-instead-of-module
-  - jinja
+  - yaml[truthy]
+
+enable_list:
+  - name[prefix]
