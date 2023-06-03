@@ -3,7 +3,7 @@
   group: "name={{ solr_group }} state=present"
 
 - name: user | Ensure solr_user exists.
-  user:
+  ansible.builtin.user:
     name: "{{ solr_user }}"
     state: present
     group: "{{ solr_group }}"

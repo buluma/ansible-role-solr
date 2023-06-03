@@ -1,6 +1,6 @@
 ---
 - name: install | Ensure dependencies are installed.
-  package:
+  ansible.builtin.package:
     name:
       - lsof
       - acl
@@ -33,7 +33,7 @@
   tags: ['skip_ansible_lint']
 
 - name: nstall | Run systemd daemon_reload (RHEL 7 workaround).
-  systemd:
+  ansible.builtin.systemd:
     name: solr
     daemon_reload: true
   when:

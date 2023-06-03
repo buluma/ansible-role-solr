@@ -1,25 +1,25 @@
 ---
 - nameL Process Users
-  import_tasks: user.yml
+  ansible.builtin.import_tasks: user.yml
   when: solr_create_user
 
 - name: Set solr_filename for Solr 4+.
-  set_fact:
+  ansible.builtin.set_fact:
     solr_filename: "solr-{{ solr_version }}"
   when: "solr_version.split('.')[0] >= '4'"
 
 - name: Set solr_filename for Solr 3.x.
-  set_fact:
+  ansible.builtin.set_fact:
     solr_filename: "apache-solr-{{ solr_version }}"
   when: "solr_version.split('.')[0] == '3'"
 
 - name: Check if Solr has been installed already.
-  stat:
+  ansible.builtin.stat:
     path: "{{ solr_install_path }}"
   register: solr_install_path_status
 
 - name: Download Solr.
-  get_url:
+  ansible.builtin.get_url:
     url: "{{ solr_mirror }}/lucene/solr/{{ solr_version }}/{{ solr_filename }}.tgz"
     dest: "{{ solr_workspace }}/{{ solr_filename }}.tgz"
     force: false
@@ -28,7 +28,7 @@
   register: solr_download_status
 
 - name: Expand Solr.
-  unarchive:
+  ansible.builtin.unarchive:
     src: "{{ solr_workspace }}/{{ solr_filename }}.tgz"
     dest: "{{ solr_workspace }}"
     copy: false
@@ -44,7 +44,7 @@
   when: "solr_version.split('.')[0] >= '5'"
 
 - name: Ensure solr is started and enabled on boot if configured.
-  service:
+  ansible.builtin.service:
     name: "{{ solr_service_name }}"
     state: "{{ solr_service_state }}"
     enabled: true

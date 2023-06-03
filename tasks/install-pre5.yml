@@ -22,7 +22,7 @@
   register: solr_example
 
 - name: install-pre5 | Ensure solr_home directory exists.
-  file:
+  ansible.builtin.file:
     path: "{{ solr_home }}"
     state: directory
     owner: "{{ solr_user }}"
@@ -35,7 +35,7 @@
   when: not solr_example.stat.exists
 
 - name: install-pre5 | Fix the example solrconfig.xml file.
-  replace:
+  ansible.builtin.replace:
     dest: "{{ solr_home }}/collection1/conf/solrconfig.xml"
     regexp: ^.+solr\.install\.dir.+$
     replace: ""
@@ -52,7 +52,7 @@
 
 # Set up Solr init script.
 - name: install-pre5 | Ensure log file is created and has proper permissions.
-  file:
+  ansible.builtin.file:
     path: "/var/log/solr.log"
     state: touch
     owner: "{{ solr_user }}"
@@ -62,7 +62,7 @@
   when: ansible_service_mgr != 'systemd'
 
 - name: install-pre5 | Copy solr init script into place.
-  template:
+  ansible.builtin.template:
     src: "solr-init-{{ ansible_os_family }}-pre5.j2"
     dest: "/etc/init.d/{{ solr_service_name }}"
     mode: 0755
@@ -75,7 +75,7 @@
     - ansible_service_mgr != 'systemd'
 
 - name: install-pre5 | Copy solr systemd unit file into place (for systemd systems).
-  template:
+  ansible.builtin.template:
     src: solr-pre5.unit.j2
     dest: /etc/systemd/system/{{ solr_service_name }}.service
     owner: root

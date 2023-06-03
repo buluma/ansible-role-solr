@@ -1,14 +1,14 @@
 ---
 # Disable for CI Runs
 - name: cores | Check current list of Solr cores.
-  uri:
+  ansible.builtin.uri:
     url: http://{{ solr_connect_host }}:{{ solr_port }}/solr/admin/cores
     return_content: true
   register: solr_cores_current
   check_mode: false
 
 - name: cores | Ensure Solr conf directories exist.
-  file:
+  ansible.builtin.file:
     path: "{{ solr_home }}/data/{{ item }}/conf"
     state: directory
     owner: "{{ solr_user }}"

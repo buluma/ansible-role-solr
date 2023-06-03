@@ -1,13 +1,13 @@
 ---
 - name: configure | Remove existing SOLR_HEAP configuration.
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: "{{ solr_config_file }}"
     regexp: "^SOLR_HEAP"
     state: absent
   notify: Restart solr
 
 - name: configure | Apply Solr configuration changes.
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: "{{ solr_config_file }}"
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
