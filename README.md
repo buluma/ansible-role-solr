@@ -1,10 +1,10 @@
-# [solr](#solr)
+# [Ansible role solr](#solr)
 
 Apache Solr for Linux.
 
-|GitHub|GitLab|Quality|Downloads|Version|Issues|Pull Requests|
-|------|------|-------|---------|-------|------|-------------|
-|[![github](https://github.com/buluma/ansible-role-solr/workflows/Ansible%20Molecule/badge.svg)](https://github.com/buluma/ansible-role-solr/actions)|[![gitlab](https://gitlab.com/shadowwalker/ansible-role-solr/badges/master/pipeline.svg)](https://gitlab.com/shadowwalker/ansible-role-solr)|[![quality](https://img.shields.io/ansible/quality/54760)](https://galaxy.ansible.com/buluma/solr)|[![downloads](https://img.shields.io/ansible/role/d/54760)](https://galaxy.ansible.com/buluma/solr)|[![Version](https://img.shields.io/github/release/buluma/ansible-role-solr.svg)](https://github.com/buluma/ansible-role-solr/releases/)|[![Issues](https://img.shields.io/github/issues/buluma/ansible-role-solr.svg)](https://github.com/buluma/ansible-role-solr/issues/)|[![PullRequests](https://img.shields.io/github/issues-pr-closed-raw/buluma/ansible-role-solr.svg)](https://github.com/buluma/ansible-role-solr/pulls/)|
+|GitHub|GitLab|Downloads|Version|Issues|Pull Requests|
+|------|------|-------|-------|------|-------------|
+|[![github](https://github.com/buluma/ansible-role-solr/workflows/Ansible%20Molecule/badge.svg)](https://github.com/buluma/ansible-role-solr/actions)|[![gitlab](https://gitlab.com/shadowwalker/ansible-role-solr/badges/master/pipeline.svg)](https://gitlab.com/shadowwalker/ansible-role-solr)|[![downloads](https://img.shields.io/ansible/role/d/4837)](https://galaxy.ansible.com/buluma/solr)|[![Version](https://img.shields.io/github/release/buluma/ansible-role-solr.svg)](https://github.com/buluma/ansible-role-solr/releases/)|[![Issues](https://img.shields.io/github/issues/buluma/ansible-role-solr.svg)](https://github.com/buluma/ansible-role-solr/issues/)|[![PullRequests](https://img.shields.io/github/issues-pr-closed-raw/buluma/ansible-role-solr.svg)](https://github.com/buluma/ansible-role-solr/pulls/)|
 
 ## [Example Playbook](#example-playbook)
 
@@ -18,19 +18,19 @@ This example is taken from [`molecule/default/converge.yml`](https://github.com/
 
   pre_tasks:
     - name: Set Java 8 package for RedHat.
-      set_fact:
+      ansible.builtin.set_fact:
         java_packages:
           - java-1.8.0-openjdk
       when: ansible_os_family == "RedHat"
 
     - name: Set Java 8 package for Ubuntu.
-      set_fact:
+      ansible.builtin.set_fact:
         java_packages:
           - openjdk-8-jdk
       when: ansible_os_family == "Ubuntu"
 
     - name: Set Java 11 package for Debian.
-      set_fact:
+      ansible.builtin.set_fact:
         java_packages:
           - openjdk-11-jdk
       when: ansible_os_family == "Debian"
@@ -41,7 +41,7 @@ This example is taken from [`molecule/default/converge.yml`](https://github.com/
 
     # See: http://unix.stackexchange.com/a/342469
     - name: Install dependencies (Debian).
-      apt:
+      ansible.builtin.apt:
         name:
           - openjdk-11-jre-headless
           - ca-certificates-java
