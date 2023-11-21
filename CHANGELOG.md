@@ -1,5 +1,14 @@
 # Changelog
 
+## [Unreleased](https://github.com/buluma/ansible-role-solr/tree/HEAD)
+
+[Full Changelog](https://github.com/buluma/ansible-role-solr/compare/1.0.7...HEAD)
+
+**Closed issues:**
+
+- Update buluma/todo-to-issue-action@v1.0.1 @buluma [\#40](https://github.com/buluma/ansible-role-solr/issues/40)
+- Update action [\#39](https://github.com/buluma/ansible-role-solr/issues/39)
+
 ## [1.0.7](https://github.com/buluma/ansible-role-solr/tree/1.0.7) (2022-09-17)
 
 [Full Changelog](https://github.com/buluma/ansible-role-solr/compare/1.0.6...1.0.7)
