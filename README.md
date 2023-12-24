@@ -1,10 +1,10 @@
-# [Ansible role solr](#solr)
+# Ansible role [solr](https://galaxy.ansible.com/ui/standalone/roles/buluma/solr/documentation)
 
 Apache Solr for Linux.
 
-|GitHub|Version|Issues|Pull Requests|
-|------|-------|------|-------------|
-|[![github](https://github.com/buluma/ansible-role-solr/actions/workflows/molecule.yml/badge.svg)](https://github.com/buluma/ansible-role-solr/actions/workflows/molecule.yml)|[![Version](https://img.shields.io/github/release/buluma/ansible-role-solr.svg)](https://github.com/buluma/ansible-role-solr/releases/)|[![Issues](https://img.shields.io/github/issues/buluma/ansible-role-solr.svg)](https://github.com/buluma/ansible-role-solr/issues/)|[![PullRequests](https://img.shields.io/github/issues-pr-closed-raw/buluma/ansible-role-solr.svg)](https://github.com/buluma/ansible-role-solr/pulls/)|
+|GitHub|Version|Issues|Pull Requests|Downloads|
+|------|-------|------|-------------|---------|
+|[![github](https://github.com/buluma/ansible-role-solr/actions/workflows/molecule.yml/badge.svg)](https://github.com/buluma/ansible-role-solr/actions/workflows/molecule.yml)|[![Version](https://img.shields.io/github/release/buluma/ansible-role-solr.svg)](https://github.com/buluma/ansible-role-solr/releases/)|[![Issues](https://img.shields.io/github/issues/buluma/ansible-role-solr.svg)](https://github.com/buluma/ansible-role-solr/issues/)|[![PullRequests](https://img.shields.io/github/issues-pr-closed-raw/buluma/ansible-role-solr.svg)](https://github.com/buluma/ansible-role-solr/pulls/)|[![Ansible Role](https://img.shields.io/ansible/role/d/buluma/solr)](https://galaxy.ansible.com/ui/standalone/roles/buluma/solr/documentation)|
 
 ## [Example Playbook](#example-playbook)
 
@@ -144,13 +144,11 @@ If you find issues, please register them in [GitHub](https://github.com/buluma/a
 
 ## [License](#license)
 
-[Apache-2.0](https://github.com/buluma/ansible-role-solr/blob/master/LICENSE).
+[Apache-2.0](https://github.com/buluma/ansible-role-solr/blob/master/LICENSE)
 
 ## [Author Information](#author-information)
 
-[buluma](https://buluma.github.io/)
+[Shadow Walker](https://buluma.github.io/)
 
-
-### [Special Thanks](#special-thanks)
 
 Template inspired by [Robert de Bock](https://github.com/robertdebock)
