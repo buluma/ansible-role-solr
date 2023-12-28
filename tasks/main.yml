@@ -36,11 +36,13 @@
   tags: ['skip_ansible_lint']
 
 # Install Solr < 5.
-- include_tasks: install-pre5.yml
+- name: Install Solr <5
+  ansible.builtin.include_tasks: install-pre5.yml
   when: "solr_version.split('.')[0] < '5'"
 
 # Install Solr 5+.
-- include_tasks: install.yml
+- name: Install Solr 5+
+  ansible.builtin.include_tasks: install.yml
   when: "solr_version.split('.')[0] >= '5'"
 
 - name: Ensure solr is started and enabled on boot if configured.
@@ -51,11 +53,13 @@
   when: solr_service_manage
 
 # Configure solr.
-- include_tasks: configure.yml
+- name: Configure Solr
+  ansible.builtin.include_tasks: configure.yml
   when: "solr_version.split('.')[0] >= '5'"
 
 # Create cores, if any are configured.
-- include_tasks: cores.yml
+- name: Create cores, if any are configured.
+  ansible.builtin.include_tasks: cores.yml
   when: "solr_cores and solr_version.split('.')[0] >= '5'"
 
 - include_tasks: trim-fat.yml
