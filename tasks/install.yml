@@ -8,7 +8,7 @@
     state: present
 
 # We add '-n' to Solr versions beyond 6.3.0 to prevent autostart on install.
-- name: nstall | Run Solr installation script.
+- name: install | Run Solr installation script.
   ansible.builtin.command: >
     {{ solr_workspace }}/{{ solr_filename }}/bin/install_solr_service.sh
     {{ solr_workspace }}/{{ solr_filename }}.tgz
@@ -23,7 +23,7 @@
   register: solr_install_script_result
 
 # Workaround for bug https://github.com/ansible/ansible-modules-core/issues/915.
-- name: nstall | Ensure solr is stopped (RHEL 7 workaround).
+- name: install | Ensure solr is stopped (RHEL 7 workaround).
   ansible.builtin.command: service {{ solr_service_name }} stop
   when:
     - ansible_os_family == 'RedHat'
@@ -32,7 +32,7 @@
   failed_when: false
   tags: ['skip_ansible_lint']
 
-- name: nstall | Run systemd daemon_reload (RHEL 7 workaround).
+- name: install | Run systemd daemon_reload (RHEL 7 workaround).
   ansible.builtin.systemd:
     name: solr
     daemon_reload: true
