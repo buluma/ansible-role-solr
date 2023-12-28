@@ -62,4 +62,5 @@
   ansible.builtin.include_tasks: cores.yml
   when: "solr_cores and solr_version.split('.')[0] >= '5'"
 
-- include_tasks: trim-fat.yml
+- name: Trim fat
+  include_tasks: trim-fat.yml
