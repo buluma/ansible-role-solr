@@ -14,9 +14,7 @@ galaxy_info:
     - name: Ubuntu
       versions:
         - bionic
-    - name: Debian
-      versions:
-        - all
+        - focal
   galaxy_tags:
     - development
     - solr

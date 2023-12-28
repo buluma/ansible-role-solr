@@ -49,10 +49,8 @@ jobs:
             tag: "8"
           - image: "docker-ubuntu-systemd"
             tag: "bionic"
-          - image: "debian-systemd"
-            tag: "latest"
-          - image: "debian-systemd"
-            tag: "bullseye"
+          - image: "docker-ubuntu-systemd"
+            tag: "focal"
     steps:
       - name: checkout
         uses: actions/checkout@v4
