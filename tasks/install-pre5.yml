@@ -68,7 +68,7 @@
     mode: 0755
   when: ansible_service_mgr != 'systemd'
 
-- name: Ensure daemon is installed (Debian).
+- name: install-pre5 | Ensure daemon is installed (Debian).
   apt: name=daemon state=present
   when:
     - ansible_os_family == "Debian"
