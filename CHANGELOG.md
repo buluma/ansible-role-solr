@@ -6,6 +6,7 @@
 
 **Closed issues:**
 
+- Update buluma/todo-to-issue-action@v1.0.1 @buluma [\#43](https://github.com/buluma/ansible-role-solr/issues/43)
 - Update buluma/todo-to-issue-action@v1.0.1 @buluma [\#40](https://github.com/buluma/ansible-role-solr/issues/40)
 - Update action [\#39](https://github.com/buluma/ansible-role-solr/issues/39)
 
