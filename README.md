@@ -67,7 +67,7 @@ solr_create_user: true
 solr_user: solr
 solr_group: "{{ solr_user }}"
 
-solr_version: "8.6.0"
+solr_version: "8.11.1"
 solr_mirror: "https://archive.apache.org/dist"
 solr_remove_cruft: false
 
@@ -86,8 +86,12 @@ solr_xmx: "512M"
 
 solr_timezone: "UTC"
 
+solr_opts: "$SOLR_OPTS -Dlog4j2.formatMsgNoLookups=true"
+
 solr_cores:
   - collection1
+
+solr_default_core_path: "{% if solr_version.split('.')[0] < '9' %}{{ solr_install_path }}/example/files/conf/{% else %}{{ solr_install_path }}/server/solr/configsets/_default/conf/{% endif %}"
 
 solr_config_file: /etc/default/{{ solr_service_name }}.in.sh
 
@@ -126,9 +130,8 @@ This role has been tested on these [container images](https://hub.docker.com/u/b
 |container|tags|
 |---------|----|
 |[EL](https://hub.docker.com/repository/docker/buluma/enterpriselinux/general)|7, 8|
-|[Debian](https://hub.docker.com/repository/docker/buluma/debian/general)|all|
 |[Ubuntu](https://hub.docker.com/repository/docker/buluma/ubuntu/general)|bionic|
-|[Kali](https://hub.docker.com/repository/docker/buluma/kali/general)|all|
+|[Debian](https://hub.docker.com/repository/docker/buluma/debian/general)|all|
 
 The minimum version of Ansible required is 2.12, tests have been done to:
 
