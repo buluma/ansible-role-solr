@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.0](https://github.com/buluma/ansible-role-solr/tree/1.1.0) (2024-01-02)
+
+[Full Changelog](https://github.com/buluma/ansible-role-solr/compare/1.0.8...1.1.0)
+
+**Merged pull requests:**
+
+- Bump actions/checkout from 3 to 4 [\#44](https://github.com/buluma/ansible-role-solr/pull/44) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [1.0.8](https://github.com/buluma/ansible-role-solr/tree/1.0.8) (2023-12-28)
 
 [Full Changelog](https://github.com/buluma/ansible-role-solr/compare/1.0.7...1.0.8)
