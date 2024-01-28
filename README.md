@@ -36,7 +36,7 @@ This example is taken from [`molecule/default/converge.yml`](https://github.com/
       when: ansible_os_family == "Debian"
 
     - name: Update apt cache.
-      apt: update_cache=true cache_valid_time=600
+      ansible.builtin.apt: update_cache=true cache_valid_time=600
       when: ansible_os_family == "Debian"
 
     # See: http://unix.stackexchange.com/a/342469
@@ -67,7 +67,7 @@ solr_create_user: true
 solr_user: solr
 solr_group: "{{ solr_user }}"
 
-solr_version: "8.11.1"
+solr_version: "8.11.2"
 solr_mirror: "https://archive.apache.org/dist"
 solr_remove_cruft: false
 
@@ -130,7 +130,8 @@ This role has been tested on these [container images](https://hub.docker.com/u/b
 |container|tags|
 |---------|----|
 |[EL](https://hub.docker.com/repository/docker/buluma/enterpriselinux/general)|7, 8|
-|[Ubuntu](https://hub.docker.com/repository/docker/buluma/ubuntu/general)|bionic, focal|
+|[Debian](https://hub.docker.com/repository/docker/buluma/debian/general)|all|
+|[Ubuntu](https://hub.docker.com/repository/docker/buluma/ubuntu/general)|all|
 |[Fedora](https://hub.docker.com/repository/docker/buluma/fedora/general)|all|
 
 The minimum version of Ansible required is 2.12, tests have been done to:
