@@ -11,12 +11,6 @@ galaxy_info:
       versions:
         - "7"
         - "8"
-    - name: Debian
-      versions:
-        - all
-    - name: Ubuntu
-      versions:
-        - all
     - name: Fedora
       versions:
         - all
