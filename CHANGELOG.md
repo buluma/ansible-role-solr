@@ -1,8 +1,8 @@
 # Changelog
 
-## [Unreleased](https://github.com/buluma/ansible-role-solr/tree/HEAD)
+## [1.2.0](https://github.com/buluma/ansible-role-solr/tree/1.2.0) (2024-01-29)
 
-[Full Changelog](https://github.com/buluma/ansible-role-solr/compare/1.1.0...HEAD)
+[Full Changelog](https://github.com/buluma/ansible-role-solr/compare/1.1.0...1.2.0)
 
 **Merged pull requests:**
 
