@@ -24,7 +24,7 @@ solr_xmx: "512M"
 
 solr_timezone: "UTC"
 
-solr_opts: "$SOLR_OPTS -Dlog4j2.formatMsgNoLookups=true"
+# solr_opts: "$SOLR_OPTS -Dlog4j2.formatMsgNoLookups=true"
 
 solr_cores:
   - collection1

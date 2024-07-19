@@ -27,7 +27,7 @@
     state: directory
     owner: "{{ solr_user }}"
     group: "{{ solr_group }}"
-    mode: 0755
+    mode: '0755'
   when: not solr_example.stat.exists
 
 - name: install-pre5 | Copy Solr example into solr_home.
@@ -39,7 +39,7 @@
     dest: "{{ solr_home }}/collection1/conf/solrconfig.xml"
     regexp: ^.+solr\.install\.dir.+$
     replace: ""
-    mode: 0644
+    mode: '0644'
   when: "not solr_example.stat.exists and solr_version.split('.')[0] == '4'"
 
 - name: install-pre5 | Ensure Solr home files are owned by the solr_user.
@@ -57,7 +57,7 @@
     state: touch
     owner: "{{ solr_user }}"
     group: root
-    mode: 0664
+    mode: '0664'
   changed_when: false
   when: ansible_service_mgr != 'systemd'
 
@@ -65,7 +65,7 @@
   ansible.builtin.template:
     src: "solr-init-{{ ansible_os_family }}-pre5.j2"
     dest: "/etc/init.d/{{ solr_service_name }}"
-    mode: 0755
+    mode: '0755'
   when: ansible_service_mgr != 'systemd'
 
 - name: install-pre5 | Ensure daemon is installed (Debian).
@@ -80,5 +80,5 @@
     dest: /etc/systemd/system/{{ solr_service_name }}.service
     owner: root
     group: root
-    mode: 0755
+    mode: '0755'
   when: ansible_service_mgr == 'systemd'
