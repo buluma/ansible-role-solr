@@ -1,5 +1,13 @@
 # Changelog
 
+## [Unreleased](https://github.com/buluma/ansible-role-solr/tree/HEAD)
+
+[Full Changelog](https://github.com/buluma/ansible-role-solr/compare/24.3.31...HEAD)
+
+**Closed issues:**
+
+- rebuild action [\#41](https://github.com/buluma/ansible-role-solr/issues/41)
+
 ## [24.3.31](https://github.com/buluma/ansible-role-solr/tree/24.3.31) (2024-03-26)
 
 [Full Changelog](https://github.com/buluma/ansible-role-solr/compare/1.2.0...24.3.31)
