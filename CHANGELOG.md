@@ -6,6 +6,7 @@
 
 **Closed issues:**
 
+- Update action [\#42](https://github.com/buluma/ansible-role-solr/issues/42)
 - rebuild action [\#41](https://github.com/buluma/ansible-role-solr/issues/41)
 
 ## [24.3.31](https://github.com/buluma/ansible-role-solr/tree/24.3.31) (2024-03-26)
