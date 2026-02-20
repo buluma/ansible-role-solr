@@ -1,11 +1,13 @@
 ---
 # Install Solr.
 - name: install-pre5 | Check if Solr is already installed.
-  stat: "path={{ solr_install_path }}/dist/{{ solr_filename }}.war"
+  ansible.builtin.stat:
+    path: "{{"
+    cmd: solr_install_path }}/dist/{{ solr_filename }}.war
   register: solr_war_file
 
 - name: install-pre5 | Copy Solr into place.
-  command: "cp -r {{ solr_workspace }}/{{ solr_filename }} {{ solr_install_path }}"
+  ansible.builtin.command: "cp -r {{ solr_workspace }}/{{ solr_filename }} {{ solr_install_path }}"
   when: not solr_war_file.stat.exists
 
 - name: install-pre5 | Ensure Solr install files are owned by the solr_user.
@@ -18,7 +20,9 @@
 
 # Set up solr_home.
 - name: install-pre5 | Check if solr_home is already set up.
-  stat: "path={{ solr_home }}/solr.xml"
+  ansible.builtin.stat:
+    path: "{{"
+    cmd: solr_home }}/solr.xml
   register: solr_example
 
 - name: install-pre5 | Ensure solr_home directory exists.
@@ -27,11 +31,11 @@
     state: directory
     owner: "{{ solr_user }}"
     group: "{{ solr_group }}"
-    mode: '0755'
+    mode: "0755"
   when: not solr_example.stat.exists
 
 - name: install-pre5 | Copy Solr example into solr_home.
-  shell: "cp -r {{ solr_install_path }}/example/solr/* {{ solr_home }}"
+  ansible.builtin.shell: "cp -r {{ solr_install_path }}/example/solr/* {{ solr_home }}"
   when: not solr_example.stat.exists
 
 - name: install-pre5 | Fix the example solrconfig.xml file.
@@ -39,7 +43,7 @@
     dest: "{{ solr_home }}/collection1/conf/solrconfig.xml"
     regexp: ^.+solr\.install\.dir.+$
     replace: ""
-    mode: '0644'
+    mode: "0644"
   when: "not solr_example.stat.exists and solr_version.split('.')[0] == '4'"
 
 - name: install-pre5 | Ensure Solr home files are owned by the solr_user.
@@ -57,7 +61,7 @@
     state: touch
     owner: "{{ solr_user }}"
     group: root
-    mode: '0664'
+    mode: "0664"
   changed_when: false
   when: ansible_service_mgr != 'systemd'
 
@@ -65,11 +69,13 @@
   ansible.builtin.template:
     src: "solr-init-{{ ansible_os_family }}-pre5.j2"
     dest: "/etc/init.d/{{ solr_service_name }}"
-    mode: '0755'
+    mode: "0755"
   when: ansible_service_mgr != 'systemd'
 
 - name: install-pre5 | Ensure daemon is installed (Debian).
-  apt: name=daemon state=present
+  ansible.builtin.apt:
+    name: daemon
+    state: present
   when:
     - ansible_os_family == "Debian"
     - ansible_service_mgr != 'systemd'
@@ -80,5 +86,5 @@
     dest: /etc/systemd/system/{{ solr_service_name }}.service
     owner: root
     group: root
-    mode: '0755'
+    mode: "0755"
   when: ansible_service_mgr == 'systemd'

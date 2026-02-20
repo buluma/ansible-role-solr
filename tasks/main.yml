@@ -23,7 +23,7 @@
     url: "{{ solr_mirror }}/lucene/solr/{{ solr_version }}/{{ solr_filename }}.tgz"
     dest: "{{ solr_workspace }}/{{ solr_filename }}.tgz"
     force: false
-    mode: '0644'
+    mode: "0644"
   when: solr_install_path_status.stat.isdir is not defined
   register: solr_download_status
 
@@ -33,7 +33,7 @@
     dest: "{{ solr_workspace }}"
     copy: false
   when: solr_download_status.changed
-  tags: ['skip_ansible_lint']
+  tags: ["skip_ansible_lint"]
 
 # Install Solr < 5.
 - name: Install Solr <5
@@ -63,4 +63,4 @@
   when: "solr_cores and solr_version.split('.')[0] >= '5'"
 
 - name: Trim fat
-  include_tasks: trim-fat.yml
+  ansible.builtin.include_tasks: trim-fat.yml
