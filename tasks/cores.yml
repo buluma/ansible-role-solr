@@ -19,6 +19,7 @@
 
 - name: cores | Ensure core configuration directories exist.
   ansible.builtin.command: "cp -r {{ solr_default_core_path }} {{ solr_home }}/data/{{ item }}/"
+  changed_when: true
   when: "item not in solr_cores_current.content"
   with_items: "{{ solr_cores }}"
   become: true
@@ -26,6 +27,7 @@
 
 - name: cores | Create configured cores.
   ansible.builtin.command: "{{ solr_install_path }}/bin/solr create -c {{ item }} -p {{ solr_port }}"
+  changed_when: true
   when: "item not in solr_cores_current.content"
   with_items: "{{ solr_cores }}"
   become: true

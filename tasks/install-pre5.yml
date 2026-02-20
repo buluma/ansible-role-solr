@@ -2,12 +2,12 @@
 # Install Solr.
 - name: install-pre5 | Check if Solr is already installed.
   ansible.builtin.stat:
-    path: "{{"
-    cmd: solr_install_path }}/dist/{{ solr_filename }}.war
+    path: "{{ solr_install_path }}/dist/{{ solr_filename }}.war"
   register: solr_war_file
 
 - name: install-pre5 | Copy Solr into place.
   ansible.builtin.command: "cp -r {{ solr_workspace }}/{{ solr_filename }} {{ solr_install_path }}"
+  changed_when: true
   when: not solr_war_file.stat.exists
 
 - name: install-pre5 | Ensure Solr install files are owned by the solr_user.
@@ -21,8 +21,7 @@
 # Set up solr_home.
 - name: install-pre5 | Check if solr_home is already set up.
   ansible.builtin.stat:
-    path: "{{"
-    cmd: solr_home }}/solr.xml
+    path: "{{ solr_home }}/solr.xml"
   register: solr_example
 
 - name: install-pre5 | Ensure solr_home directory exists.
@@ -35,7 +34,8 @@
   when: not solr_example.stat.exists
 
 - name: install-pre5 | Copy Solr example into solr_home.
-  ansible.builtin.shell: "cp -r {{ solr_install_path }}/example/solr/* {{ solr_home }}"
+  ansible.builtin.command: "cp -r {{ solr_install_path }}/example/solr/. {{ solr_home }}"
+  changed_when: true
   when: not solr_example.stat.exists
 
 - name: install-pre5 | Fix the example solrconfig.xml file.
