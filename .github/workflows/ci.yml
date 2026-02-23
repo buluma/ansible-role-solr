@@ -4,9 +4,9 @@ name: CI
   pull_request:
   push:
     branches:
-      - main
+    - main
   schedule:
-    - cron: "30 6 * * 2"
+  - cron: "30 6 * * 2"
   workflow_dispatch:
 
 defaults:
@@ -19,22 +19,22 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-      - name: Check out the codebase.
-        uses: actions/checkout@v6
-        with:
-          path: 'buluma.solr'
+    - name: Check out the codebase.
+      uses: actions/checkout@v6
+      with:
+        path: 'buluma.solr'
 
-      - name: Set up Python 3.
-        uses: actions/setup-python@v6
-        with:
-          python-version: '3.x'
+    - name: Set up Python 3.
+      uses: actions/setup-python@v6
+      with:
+        python-version: '3.x'
 
-      - name: Install test dependencies.
-        run: pip3 install yamllint
+    - name: Install test dependencies.
+      run: pip3 install yamllint
 
-      - name: Lint code.
-        run: |
-          yamllint .
+    - name: Lint code.
+      run: |
+        yamllint .
 
   molecule:
     name: Molecule
@@ -43,57 +43,57 @@ jobs:
       matrix:
         include:
           # Solr 8.
-          - distro: centos7
-            playbook: converge.yml
-          - distro: ubuntu1804
-            playbook: converge.yml
-          - distro: debian10
-            playbook: converge.yml
+        - distro: centos7
+          playbook: converge.yml
+        - distro: ubuntu1804
+          playbook: converge.yml
+        - distro: debian10
+          playbook: converge.yml
 
           # Solr 7.
-          - distro: centos7
-            playbook: solr-7.yml
-          - distro: debian10
-            playbook: solr-7.yml
+        - distro: centos7
+          playbook: solr-7.yml
+        - distro: debian10
+          playbook: solr-7.yml
 
           # Older versions.
-          - distro: ubuntu1604
-            playbook: solr-6.yml
-          - distro: ubuntu1604
-            playbook: solr-5.yml
-          - distro: ubuntu1604
-            playbook: solr-4.yml
-          - distro: ubuntu1604
-            playbook: solr-3.yml
+        - distro: ubuntu1604
+          playbook: solr-6.yml
+        - distro: ubuntu1604
+          playbook: solr-5.yml
+        - distro: ubuntu1604
+          playbook: solr-4.yml
+        - distro: ubuntu1604
+          playbook: solr-3.yml
 
     steps:
-      - name: Check out the codebase.
-        uses: actions/checkout@v6
-        with:
-          path: 'buluma.solr'
+    - name: Check out the codebase.
+      uses: actions/checkout@v6
+      with:
+        path: 'buluma.solr'
 
-      - name: Set up Python 3.
-        uses: actions/setup-python@v6
-        with:
-          python-version: '3.x'
+    - name: Set up Python 3.
+      uses: actions/setup-python@v6
+      with:
+        python-version: '3.x'
 
-      - name: Install test dependencies.
-        run: pip3 install ansible molecule[docker] docker
+    - name: Install test dependencies.
+      run: pip3 install ansible molecule[docker] docker
 
-      - name: Run Molecule tests.
-        run: molecule test
-        env:
-          PY_COLORS: '1'
-          ANSIBLE_FORCE_COLOR: '1'
-          MOLECULE_DISTRO: ${{ matrix.distro }}
-          MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
+    - name: Run Molecule tests.
+      run: molecule test
+      env:
+        PY_COLORS: '1'
+        ANSIBLE_FORCE_COLOR: '1'
+        MOLECULE_DISTRO: ${{ matrix.distro }}
+        MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
 
-      - name: Create Issue on failure.
-        if: failure()
-        uses: buluma/create-issue-action@v2.0.0
-        with:
-          title: Build Failed
-          token: ${{secrets.GITHUB_TOKEN}}
-          assignees: ${{github.actor}}
-          labels: bug
-          body: Workflow failed for commit ${{github.sha}}
+    - name: Create Issue on failure.
+      if: failure()
+      uses: buluma/create-issue-action@v2.0.0
+      with:
+        title: Build Failed
+        token: ${{secrets.GITHUB_TOKEN}}
+        assignees: ${{github.actor}}
+        labels: bug
+        body: Workflow failed for commit ${{github.sha}}
