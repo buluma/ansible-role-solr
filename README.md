@@ -12,60 +12,60 @@ This example is taken from [`molecule/default/converge.yml`](https://github.com/
 
 ```yaml
 ---
-- name: Converge
-  hosts: all
-  become: true
-  gather_facts: true
+  - name: Converge
+    hosts: all
+    become: true
+    gather_facts: true
 
-  pre_tasks:
-    - name: Set Java 8 package for RedHat.
-      ansible.builtin.set_fact:
-        java_packages:
-          - java-1.8.0-openjdk
-      when: ansible_os_family == "RedHat"
+    pre_tasks:
+      - name: Set Java 8 package for RedHat.
+        ansible.builtin.set_fact:
+          java_packages:
+            - java-1.8.0-openjdk
+        when: ansible_os_family == "RedHat"
 
-    - name: Set Java 8 package for Ubuntu.
-      ansible.builtin.set_fact:
-        java_packages:
-          - openjdk-8-jdk
-      when: ansible_os_family == "Ubuntu"
+      - name: Set Java 8 package for Ubuntu.
+        ansible.builtin.set_fact:
+          java_packages:
+            - openjdk-8-jdk
+        when: ansible_os_family == "Ubuntu"
 
-    - name: Set Java 11 package for Debian.
-      ansible.builtin.set_fact:
-        java_packages:
-          - openjdk-11-jdk
-      when: ansible_os_family == "Debian"
+      - name: Set Java 11 package for Debian.
+        ansible.builtin.set_fact:
+          java_packages:
+            - openjdk-11-jdk
+        when: ansible_os_family == "Debian"
 
-    - name: Update apt cache.
-      ansible.builtin.apt: update_cache=true cache_valid_time=600
-      when: ansible_os_family == "Debian"
+      - name: Update apt cache.
+        ansible.builtin.apt: update_cache=true cache_valid_time=600
+        when: ansible_os_family == "Debian"
 
     # See: http://unix.stackexchange.com/a/342469
-    - name: Install dependencies (Debian).
-      ansible.builtin.apt:
-        name:
-          - openjdk-11-jre-headless
-          - ca-certificates-java
-        state: present
-      when: ansible_distribution == "Debian"
+      - name: Install dependencies (Debian).
+        ansible.builtin.apt:
+          name:
+            - openjdk-11-jre-headless
+            - ca-certificates-java
+          state: present
+        when: ansible_distribution == "Debian"
 
-  roles:
-    - role: buluma.java
-    - role: buluma.solr
+    roles:
+      - role: buluma.java
+      - role: buluma.solr
 ```
 
 The machine needs to be prepared. In CI this is done using [`molecule/default/prepare.yml`](https://github.com/buluma/ansible-role-solr/blob/master/molecule/default/prepare.yml):
 
 ```yaml
 ---
-- name: Prepare
-  hosts: all
-  gather_facts: false
-  become: true
+  - name: Prepare
+    hosts: all
+    gather_facts: false
+    become: true
 
-  roles:
-    - role: buluma.bootstrap
-    - role: buluma.java
+    roles:
+      - role: buluma.bootstrap
+      - role: buluma.java
 ```
 
 Also see a [full explanation and example](https://buluma.github.io/how-to-use-these-roles.html) on how to use these roles.
@@ -106,7 +106,8 @@ solr_timezone: "UTC"
 solr_cores:
   - collection1
 
-solr_default_core_path: "{% if solr_version.split('.')[0] < '9' %}{{ solr_install_path }}/example/files/conf/{% else %}{{ solr_install_path }}/server/solr/configsets/_default/conf/{%
+solr_default_core_path: "{% if solr_version.split('.')[0] < '9' %}{{ solr_install_path
+  }}/example/files/conf/{% else %}{{ solr_install_path }}/server/solr/configsets/_default/conf/{%
   endif %}"
 
 solr_config_file: /etc/default/{{ solr_service_name }}.in.sh
