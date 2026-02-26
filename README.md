@@ -104,10 +104,9 @@ solr_timezone: "UTC"
 # solr_opts: "$SOLR_OPTS -Dlog4j2.formatMsgNoLookups=true"
 
 solr_cores:
-- collection1
+  - collection1
 
-solr_default_core_path: "{% if solr_version.split('.')[0] < '9' %}{{ solr_install_path
-  }}/example/files/conf/{% else %}{{ solr_install_path }}/server/solr/configsets/_default/conf/{%
+solr_default_core_path: "{% if solr_version.split('.')[0] < '9' %}{{ solr_install_path }}/example/files/conf/{% else %}{{ solr_install_path }}/server/solr/configsets/_default/conf/{%
   endif %}"
 
 solr_config_file: /etc/default/{{ solr_service_name }}.in.sh
