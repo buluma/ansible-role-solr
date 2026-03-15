@@ -9,6 +9,10 @@
 - Update action [\#42](https://github.com/buluma/ansible-role-solr/issues/42)
 - rebuild action [\#41](https://github.com/buluma/ansible-role-solr/issues/41)
 
+**Merged pull requests:**
+
+- Bump docker/setup-buildx-action from 3 to 4 [\#55](https://github.com/buluma/ansible-role-solr/pull/55) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [24.3.31](https://github.com/buluma/ansible-role-solr/tree/24.3.31) (2024-03-26)
 
 [Full Changelog](https://github.com/buluma/ansible-role-solr/compare/1.2.0...24.3.31)
