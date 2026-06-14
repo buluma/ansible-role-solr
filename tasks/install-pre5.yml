@@ -63,22 +63,22 @@
     group: root
     mode: "0664"
   changed_when: false
-  when: ansible_service_mgr != 'systemd'
+  when: ansible_facts.service_mgr != 'systemd'
 
 - name: install-pre5 | Copy solr init script into place.
   ansible.builtin.template:
-    src: "solr-init-{{ ansible_os_family }}-pre5.j2"
+    src: "solr-init-{{ ansible_facts.os_family }}-pre5.j2"
     dest: "/etc/init.d/{{ solr_service_name }}"
     mode: "0755"
-  when: ansible_service_mgr != 'systemd'
+  when: ansible_facts.service_mgr != 'systemd'
 
 - name: install-pre5 | Ensure daemon is installed (Debian).
   ansible.builtin.apt:
     name: daemon
     state: present
   when:
-    - ansible_os_family == "Debian"
-    - ansible_service_mgr != 'systemd'
+    - ansible_facts.os_family == "Debian"
+    - ansible_facts.service_mgr != 'systemd'
 
 - name: install-pre5 | Copy solr systemd unit file into place (for systemd systems).
   ansible.builtin.template:
@@ -87,4 +87,4 @@
     owner: root
     group: root
     mode: "0755"
-  when: ansible_service_mgr == 'systemd'
+  when: ansible_facts.service_mgr == 'systemd'
