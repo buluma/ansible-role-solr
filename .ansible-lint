@@ -10,6 +10,7 @@ exclude_paths:
   - .cache
   - .github
   - requirements.yml
+  - .ansible/
 
 enable_list:
   - name[prefix]
