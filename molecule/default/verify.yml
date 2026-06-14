@@ -1,0 +1,17 @@
+---
+- name: Verify
+  hosts: all
+  become: true
+  gather_facts: false
+
+  tasks:
+    - name: Check if solr install path exists
+      ansible.builtin.stat:
+        path: /opt/solr
+      register: solr_path
+
+    - name: Assert solr is installed
+      ansible.builtin.assert:
+        that:
+          - solr_path.stat.exists
+        quiet: true
