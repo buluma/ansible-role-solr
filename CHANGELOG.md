@@ -1,5 +1,9 @@
 # Changelog
 
+## [26.6.1](https://github.com/buluma/ansible-role-solr/tree/26.6.1) (2026-06-14)
+
+[Full Changelog](https://github.com/buluma/ansible-role-solr/compare/26.6.0...26.6.1)
+
 ## [26.6.0](https://github.com/buluma/ansible-role-solr/tree/26.6.0) (2026-06-14)
 
 [Full Changelog](https://github.com/buluma/ansible-role-solr/compare/24.3.31...26.6.0)
@@ -8,10 +12,6 @@
 
 - Update action [\#42](https://github.com/buluma/ansible-role-solr/issues/42)
 - rebuild action [\#41](https://github.com/buluma/ansible-role-solr/issues/41)
-
-**Merged pull requests:**
-
-- Bump docker/setup-buildx-action from 3 to 4 [\#55](https://github.com/buluma/ansible-role-solr/pull/55) ([dependabot[bot]](https://github.com/apps/dependabot))
 
 ## [24.3.31](https://github.com/buluma/ansible-role-solr/tree/24.3.31) (2024-03-26)
 
@@ -58,6 +58,7 @@
 
 **Merged pull requests:**
 
+- Bump docker/setup-buildx-action from 3 to 4 [\#55](https://github.com/buluma/ansible-role-solr/pull/55) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump buluma/gh-action-auto-merge-dependabot-updates from 1.0.3 to 1.0.4 [\#30](https://github.com/buluma/ansible-role-solr/pull/30) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump actions/setup-python from 2 to 3 [\#27](https://github.com/buluma/ansible-role-solr/pull/27) ([dependabot[bot]](https://github.com/apps/dependabot))
 
