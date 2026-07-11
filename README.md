@@ -22,23 +22,23 @@ This example is taken from [`molecule/default/converge.yml`](https://github.com/
       ansible.builtin.set_fact:
         java_packages:
           - java-1.8.0-openjdk
-      when: ansible_os_family == "RedHat"
+      when: ansible_facts['os_family'] == "RedHat"
 
     - name: Set Java 8 package for Ubuntu.
       ansible.builtin.set_fact:
         java_packages:
           - openjdk-8-jdk
-      when: ansible_os_family == "Ubuntu"
+      when: ansible_facts['os_family'] == "Ubuntu"
 
     - name: Set Java 11 package for Debian.
       ansible.builtin.set_fact:
         java_packages:
           - openjdk-11-jdk
-      when: ansible_os_family == "Debian"
+      when: ansible_facts['os_family'] == "Debian"
 
     - name: Update apt cache.
       ansible.builtin.apt: update_cache=true cache_valid_time=600
-      when: ansible_os_family == "Debian"
+      when: ansible_facts['os_family'] == "Debian"
 
       # See: http://unix.stackexchange.com/a/342469
     - name: Install dependencies (Debian).
@@ -47,7 +47,7 @@ This example is taken from [`molecule/default/converge.yml`](https://github.com/
           - openjdk-11-jre-headless
           - ca-certificates-java
         state: present
-      when: ansible_distribution == "Debian"
+      when: ansible_facts['distribution'] == "Debian"
 
   roles:
     - role: buluma.java
@@ -60,8 +60,15 @@ The machine needs to be prepared. In CI this is done using [`molecule/default/pr
 ---
 - name: Prepare
   hosts: all
-  gather_facts: false
   become: true
+  gather_facts: false
+
+  pre_tasks:
+    - name: Install sudo if missing
+      ansible.builtin.raw: "{{ ansible_pkg_mgr | default('dnf') }} install -y sudo}"
+      become: false
+      changed_when: false
+      failed_when: false
 
   roles:
     - role: buluma.bootstrap
@@ -143,12 +150,14 @@ Here is an overview of related roles:
 
 ## [Compatibility](#compatibility)
 
-This role has been tested on these [container images](https://hub.docker.com/u/robertdebock):
+This role has been tested on these [container images](https://hub.docker.com/u/buluma):
 
 |container|tags|
 |---------|----|
-|[EL](https://hub.docker.com/r/robertdebock/enterpriselinux)|all|
-|[Fedora](https://hub.docker.com/r/robertdebock/fedora)|all|
+|[EL](https://hub.docker.com/r/buluma/docker-molecule-images)|all|
+|[Debian](https://hub.docker.com/r/buluma/docker-molecule-images)|all|
+|[Fedora](https://hub.docker.com/r/buluma/docker-molecule-images)|all|
+|[Ubuntu](https://hub.docker.com/r/buluma/docker-molecule-images)|all|
 
 The minimum version of Ansible required is 2.12, tests have been done on:
 
@@ -166,6 +175,3 @@ If you find issues, please register them on [GitHub](https://github.com/buluma/a
 
 [buluma](https://buluma.github.io/)
 
-### Get Help
-- Report issues: https://github.com/buluma/ansible-role-solr/issues/new
-- See docs: https://docs.ansible.com/collection/gallery/ansible-role-solr
