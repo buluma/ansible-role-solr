@@ -5,37 +5,17 @@
   gather_facts: true
 
   pre_tasks:
-    - name: Set Java 8 package for RedHat.
-      ansible.builtin.set_fact:
-        java_packages:
-          - java-1.8.0-openjdk
-      when: ansible_facts['os_family'] == "RedHat"
-
-    - name: Set Java 8 package for Ubuntu.
-      ansible.builtin.set_fact:
-        java_packages:
-          - openjdk-8-jdk
-      when: ansible_facts['os_family'] == "Ubuntu"
-
-    - name: Set Java 11 package for Debian.
-      ansible.builtin.set_fact:
-        java_packages:
-          - openjdk-11-jdk
-      when: ansible_facts['os_family'] == "Debian"
-
     - name: Update apt cache.
       ansible.builtin.apt: update_cache=true cache_valid_time=600
       when: ansible_facts['os_family'] == "Debian"
 
-      # See: http://unix.stackexchange.com/a/342469
-    - name: Install dependencies (Debian).
-      ansible.builtin.apt:
-        name:
-          - openjdk-11-jre-headless
-          - ca-certificates-java
-        state: present
-      when: ansible_facts['distribution'] == "Debian"
-
   roles:
+    # Solr 9.7+ needs Java 17 in practice, even though the docs still list
+    # Java 11 as the minimum - it fails to start under 11 (control process
+    # exits immediately). Pin it here rather than relying on buluma.java's
+    # per-distro default, which is 11 for generic RedHat (covers rockylinux9/
+    # almalinux9). Debian 13 dropped openjdk-17 entirely, so it keeps its
+    # own default of 21 there, which also satisfies Solr's requirement.
     - role: buluma.java
+      java_version: "{{ '21' if (ansible_facts['distribution'] == 'Debian' and ansible_facts['distribution_major_version'] == '13') else '17' }}"
     - role: buluma.solr
