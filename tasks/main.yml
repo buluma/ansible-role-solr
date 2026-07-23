@@ -49,11 +49,21 @@
   when: "solr_version.split('.')[0] >= '5'"
 
 - name: Ensure solr is started and enabled on boot if configured.
-  ansible.builtin.service:
-    name: "{{ solr_service_name }}"
-    state: "{{ solr_service_state }}"
-    enabled: true
   when: solr_service_manage
+  block:
+    - name: Ensure solr is started and enabled on boot if configured.
+      ansible.builtin.service:
+        name: "{{ solr_service_name }}"
+        state: "{{ solr_service_state }}"
+        enabled: true
+  rescue:
+    - name: Debug | Capture solr.service journal on start failure.
+      ansible.builtin.command: journalctl -xeu {{ solr_service_name }} --no-pager -n 200
+      changed_when: false
+      register: solr_journal
+    - name: Debug | Print solr.service journal.
+      ansible.builtin.fail:
+        msg: "{{ solr_journal.stdout_lines }}"
 
 # Configure solr.
 - name: Configure Solr
