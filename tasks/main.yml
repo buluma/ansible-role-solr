@@ -20,7 +20,10 @@
 
 - name: Download Solr.
   ansible.builtin.get_url:
-    url: "{{ solr_mirror }}/lucene/solr/{{ solr_version }}/{{ solr_filename }}.tgz"
+    # Solr became its own Apache top-level project (separate from
+    # Lucene) starting with 9.x, moving the archive path from
+    # lucene/solr to solr/solr.
+    url: "{{ solr_mirror }}/{{ 'solr/solr' if solr_version.split('.')[0] | int >= 9 else 'lucene/solr' }}/{{ solr_version }}/{{ solr_filename }}.tgz"
     dest: "{{ solr_workspace }}/{{ solr_filename }}.tgz"
     force: false
     mode: "0644"
