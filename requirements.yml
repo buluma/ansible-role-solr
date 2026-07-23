@@ -4,3 +4,4 @@ roles:
   - name: buluma.java
 collections:
   - name: ansible.posix
+  - name: community.general
