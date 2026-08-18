@@ -6,6 +6,7 @@
 
 **Merged pull requests:**
 
+- Bump ansible/ansible-lint from 26.6.0 to 26.8.0 [\#60](https://github.com/buluma/ansible-role-solr/pull/60) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump release-drafter/release-drafter from 7 to 7.6.0 [\#59](https://github.com/buluma/ansible-role-solr/pull/59) ([dependabot[bot]](https://github.com/apps/dependabot))
 
 ## [26.6.2](https://github.com/buluma/ansible-role-solr/tree/26.6.2) (2026-07-23)
@@ -25,16 +26,13 @@
 - Update action [\#42](https://github.com/buluma/ansible-role-solr/issues/42)
 - rebuild action [\#41](https://github.com/buluma/ansible-role-solr/issues/41)
 
-**Merged pull requests:**
-
-- Bump docker/setup-buildx-action from 3 to 4 [\#55](https://github.com/buluma/ansible-role-solr/pull/55) ([dependabot[bot]](https://github.com/apps/dependabot))
-
 ## [24.3.31](https://github.com/buluma/ansible-role-solr/tree/24.3.31) (2024-03-26)
 
 [Full Changelog](https://github.com/buluma/ansible-role-solr/compare/1.2.0...24.3.31)
 
 **Merged pull requests:**
 
+- Bump docker/setup-buildx-action from 3 to 4 [\#55](https://github.com/buluma/ansible-role-solr/pull/55) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump buluma/dependabot-auto-merge-action from 2.1.1 to 2.1.2 [\#50](https://github.com/buluma/ansible-role-solr/pull/50) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump release-drafter/release-drafter from 5 to 6 [\#49](https://github.com/buluma/ansible-role-solr/pull/49) ([dependabot[bot]](https://github.com/apps/dependabot))
 
