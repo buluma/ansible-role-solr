@@ -35,4 +35,3 @@
 
   roles:
     - role: buluma.bootstrap
-    - role: buluma.java
