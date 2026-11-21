@@ -15,3 +15,25 @@
         that:
           - solr_path.stat.exists
         quiet: true
+
+    - name: Query the Solr system info
+      ansible.builtin.uri:
+        url: http://localhost:8983/solr/admin/info/system?wt=json
+        return_content: true
+      register: solr_system
+      until: solr_system.status == 200
+      retries: 15
+      delay: 2
+
+    - name: Query the Solr cores
+      ansible.builtin.uri:
+        url: http://localhost:8983/solr/admin/cores?action=STATUS&wt=json
+        return_content: true
+      register: solr_cores_status
+
+    - name: Assert Solr runs in user-managed mode with the configured core
+      ansible.builtin.assert:
+        that:
+          - solr_system.json.mode == 'std'
+          - "'collection1' in solr_cores_status.json.status"
+        quiet: true
