@@ -26,13 +26,16 @@ This example is taken from [`molecule/default/converge.yml`](https://github.com/
     # Solr 10 needs Java 21, which Debian 12 doesn't package, so that
     # platform keeps testing Solr 9.
     converge_solr_10: "{{ not (ansible_facts['distribution'] == 'Debian' and ansible_facts['distribution_major_version'] | int < 13) }}"
+    # Fedora has no java-21-openjdk package on every release, but its default
+    # (25 in buluma.java) is new enough.
+    converge_java_21: "{{ converge_solr_10 and ansible_facts['distribution'] != 'Fedora' }}"
 
   roles:
     - role: buluma.java
       java_version: 21
-      when: converge_solr_10
+      when: converge_java_21
     - role: buluma.java
-      when: not converge_solr_10
+      when: not converge_java_21
     - role: buluma.solr
       solr_version: "10.1.0"
       when: converge_solr_10
@@ -80,7 +83,6 @@ The machine needs to be prepared. In CI this is done using [`molecule/default/pr
 
   roles:
     - role: buluma.bootstrap
-    - role: buluma.java
 ```
 
 Also see a [full explanation and example](https://buluma.github.io/how-to-use-these-roles.html) on how to use these roles.
