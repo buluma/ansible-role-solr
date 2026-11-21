@@ -111,9 +111,10 @@ solr_create_user: true
 solr_user: solr
 solr_group: "{{ solr_user }}"
 
-solr_version: "8.11.2"
+solr_version: "9.11.0"
 solr_mirror: "https://archive.apache.org/dist"
 solr_remove_cruft: false
+solr_nashorn_core_version: "15.7"
 
 solr_service_manage: true
 solr_service_name: solr
